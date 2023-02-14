@@ -1,77 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<layout>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    <data>
+        <variable
+            name="news"
+            type="com.example.newsapp.network.NewsArticle" />
+        <variable
+            name="clickListener"
+            type="com.example.newsapp.ui.NewListListener" />
+    </data>
 
-    <!--    <data>-->
-    <!--        <variable-->
-    <!--            name="news"-->
-    <!--            type="" />-->
-    <!--    </data>-->
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/news_image"
-        android:layout_width="345dp"
-        android:layout_height="240dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="4dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/layout_bg"
-        android:clipToOutline="true"
-        android:scaleType="centerCrop"
-        tools:src="@tools:sample/backgrounds/scenic" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/news_image"
+                    android:layout_width="345dp"
+                    android:layout_height="240dp"
+                    android:layout_marginEnd="20dp"
+                    android:onClick="@{() -> clickListener.onClick(news)}"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="0dp">
 
-    <TextView
-        android:id="@+id/news_title"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:fontFamily="serif"
-        android:gravity="start"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:textAlignment="viewStart"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        tools:text="This is the title of the news" />
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="4dp"
+                        android:clipToOutline="true"
+                        tools:src="@tools:sample/backgrounds/scenic"
+                        android:background="@drawable/layout_bg"/>
 
-    <TextView
-        android:id="@+id/news_author"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/news_title"
-        android:fontFamily="serif"
-        android:gravity="start"
-        android:paddingStart="24dp"
-        android:paddingEnd="0dp"
-        android:textAlignment="viewStart"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        tools:text="by Author" />
 
-    <TextView
-        android:id="@+id/news_date"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:layout_alignBottom="@id/news_image"
-        android:layout_alignStart="@id/news_image"
-        android:paddingBottom="8dp"
-        android:paddingEnd="24dp"
-        android:paddingStart="0dp"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="normal"
-        tools:text="Descriptions of the news article and a line of text" />
-    <!--        app:imageUrl="@{photo.imgSrcUrl}"-->
-</RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/news_title"
+                    android:layout_width="345dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="serif"
+                    android:gravity="start"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="This is the title of the news and a long text" />
+
+                <TextView
+                    android:id="@+id/news_author"
+                    android:layout_width="345dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/news_title"
+                    android:fontFamily="serif"
+                    android:gravity="start"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="12dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    tools:text="by Author" />
+
+                <TextView
+                    android:id="@+id/news_date"
+                    android:layout_width="345dp"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="serif"
+                    android:layout_alignBottom="@id/news_image"
+                    android:layout_alignStart="@id/news_image"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingStart="24dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    tools:text="Descriptions of the news article and a line of text about the article" />
+            </RelativeLayout>
+</layout>
