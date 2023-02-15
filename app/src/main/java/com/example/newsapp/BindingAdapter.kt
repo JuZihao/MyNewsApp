@@ -14,7 +14,13 @@ import com.example.newsapp.ui.NewsListAdapter
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        imgView.load(imgUrl)
+        if (imgUri == null) {
+            imgView.load(R.drawable.ic_broken_image)
+        } else {
+            imgView.load(imgUri) {
+                this.placeholder(R.drawable.loading_img)
+            }
+        }
     }
 }
 

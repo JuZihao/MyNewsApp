@@ -1,6 +1,6 @@
 package com.example.newsapp.network
 
 data class Source(
-    val id: Any,
+    val id: String?,
     val name: String
 )

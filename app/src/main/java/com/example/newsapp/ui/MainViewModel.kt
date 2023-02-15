@@ -1,6 +1,8 @@
 package com.example.newsapp.ui
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,18 +10,22 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsapp.MainActivity
 import com.example.newsapp.network.NewsApi
 import com.example.newsapp.network.NewsArticle
-import com.example.newsapp.network.NewsDataFromJson
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.text.SimpleDateFormat
+
 
 enum class NewsApiStatus {LOADING, ERROR, DONE}
 
+
 class MainViewModel : ViewModel() {
+
+    lateinit var rawNewsList: List<NewsArticle>
 
     private val _status = MutableLiveData<NewsApiStatus>()
     val status: LiveData<NewsApiStatus> = _status
+
+    private val _size = MutableLiveData<String>()
+    val size: LiveData<String> = _size
 
     private val _newsList = MutableLiveData<List<NewsArticle>>()
     val newsList: MutableLiveData<List<NewsArticle>> = _newsList
@@ -35,12 +41,25 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = NewsApiStatus.LOADING
             try {
-                _newsList.value = NewsApi.retrofitService.getNews("us").articles
+                rawNewsList = NewsApi.retrofitService.getNews("us").articles
+                val dateFormatter = SimpleDateFormat("EEEE, dd MMM yyyy")
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                for (news in rawNewsList) {
+                    val date = inputFormat.parse(news.publishedAt)
+                    news.publishedAt = dateFormatter.format(date)
+                }
+                _newsList.value = rawNewsList
                 _status.value = NewsApiStatus.DONE
+                _size.value = "Received news from the api with size: ${rawNewsList.size}}"
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
+                _size.value = "API error:${e}}"
                 _newsList.value = listOf()
             }
         }
+    }
+
+    fun onNewsClicked(news: NewsArticle) {
+        _news.value = news
     }
 }

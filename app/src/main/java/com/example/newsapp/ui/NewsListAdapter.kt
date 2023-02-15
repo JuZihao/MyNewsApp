@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.newsapp.databinding.LinearViewItemBinding
 
 
-class NewsListAdapter(val clickListener: NewListListener) :
+class NewsListAdapter ://(val clickListener: NewListListener) :
         ListAdapter<NewsArticle, NewsListAdapter.NewListViewHolder>(DiffCallback) {
 
     class NewListViewHolder(
         var binding: LinearViewItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(clickListener: NewListListener, news: NewsArticle) {
+        fun bind(news: NewsArticle) { //clickListener: NewListListener,
             binding.news = news
-            binding.clickListener = clickListener
+            //binding.clickListener = clickListener
             binding.executePendingBindings()
         }
     }
@@ -37,14 +37,19 @@ class NewsListAdapter(val clickListener: NewListListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return NewListViewHolder(
-            LinearViewItemBinding.inflate(layoutInflater, parent, false)
+            LinearViewItemBinding.inflate(layoutInflater)
         )
     }
 
     override fun onBindViewHolder(holder: NewListViewHolder, position: Int) {
         val news = getItem(position)
-        holder.bind(clickListener, news)
+        holder.bind(news)
     }
+
+//    override fun onBindViewHolder(holder: NewListViewHolder, position: Int) {
+//        val news = getItem(position)
+//        holder.bind(clickListener, news)
+//    }
 }
 
 
