@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.newsapp.network.NewsArticle
 import com.example.newsapp.ui.NewsApiStatus
+import com.example.newsapp.ui.NewsCardAdapter
 import com.example.newsapp.ui.NewsListAdapter
 
 @BindingAdapter("imageUrl")
@@ -28,6 +29,13 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 fun bindRecyclerView(recyclerView: RecyclerView,
                      data: List<NewsArticle>?) {
     val adapter = recyclerView.adapter as NewsListAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("horizontalnews")
+fun bindHorizontalRecyclerView(recyclerView: RecyclerView,
+                     data: List<NewsArticle>?) {
+    val adapter = recyclerView.adapter as NewsCardAdapter
     adapter.submitList(data)
 }
 

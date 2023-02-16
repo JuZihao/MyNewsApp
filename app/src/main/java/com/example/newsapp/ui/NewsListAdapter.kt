@@ -9,19 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.newsapp.databinding.LinearViewItemBinding
 
 
-class NewsListAdapter ://(val clickListener: NewListListener) :
+class NewsListAdapter (val clickListener: NewListListener) :
         ListAdapter<NewsArticle, NewsListAdapter.NewListViewHolder>(DiffCallback) {
-
-    class NewListViewHolder(
-        var binding: LinearViewItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(news: NewsArticle) { //clickListener: NewListListener,
-            binding.news = news
-            //binding.clickListener = clickListener
-            binding.executePendingBindings()
-        }
-    }
 
     companion object DiffCallback : DiffUtil.ItemCallback<NewsArticle>() {
 
@@ -43,13 +32,22 @@ class NewsListAdapter ://(val clickListener: NewListListener) :
 
     override fun onBindViewHolder(holder: NewListViewHolder, position: Int) {
         val news = getItem(position)
-        holder.bind(news)
+        holder.bind(news, clickListener)
     }
 
-//    override fun onBindViewHolder(holder: NewListViewHolder, position: Int) {
-//        val news = getItem(position)
-//        holder.bind(clickListener, news)
-//    }
+    class NewListViewHolder(
+        var binding: LinearViewItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(
+            news: NewsArticle,
+            clickListener: NewListListener) {
+            binding.news = news
+            binding.clickListener = clickListener
+            binding.executePendingBindings()
+        }
+    }
+
 }
 
 

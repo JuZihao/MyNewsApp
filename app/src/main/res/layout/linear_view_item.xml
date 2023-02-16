@@ -11,10 +11,7 @@
         <variable
             name="clickListener"
             type="com.example.newsapp.ui.NewListListener" />
-<!--        android:onClick="@{() -> clickListener.onClick(news)}"-->
-
     </data>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"

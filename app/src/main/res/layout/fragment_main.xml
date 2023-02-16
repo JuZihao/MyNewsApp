@@ -25,20 +25,13 @@
 <!--            app:layout_constraintRight_toRightOf="parent"-->
 <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/TopNews"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:padding="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/horizontal_list"
+                app:layout_constraintTop_toTopOf="parent"
                 android:text="Latest News"
                 tools:text="Latest News" />
 
@@ -46,35 +39,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/horizontal_list"
+                app:layout_constraintTop_toTopOf="parent"
                 android:text="See all ->"
                 tools:text="See all ->" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/horizontal_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:listData="@{viewModel.newsList}"
+                app:horizontalnews="@{viewModel.newsList.subList(0,5)}"
                 app:reverseLayout="false"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:itemCount="16"
                 tools:listitem="@layout/horizontal_view_item" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/news_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:clipToPadding="false"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/TopNews"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_list"
             app:listData="@{viewModel.newsList}"
             tools:itemCount="16"
             tools:listitem="@layout/linear_view_item" />

@@ -11,29 +11,88 @@
     </data>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".NewsDetailFragment">
 
-            <TextView
-                android:id="@+id/title_card"
+
+            <ImageView
+                android:id="@+id/newsDetailImg"
                 android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.news.urlToImage}"
+                tools:src="@tools:sample/backgrounds/scenic"
+                android:layout_gravity="center|top"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/title_card"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-                android:text="@{viewModel.news.title}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Dummy news title" />
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                android:layout_gravity="center"
+                android:background="@color/cardview_dark_background"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/card_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@{viewModel.news.publishedAt}"
+                    android:paddingStart="12dp">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/card_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/card_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@{viewModel.news.title}"
+                    tools:text="title"
+                    android:paddingStart="12dp"/>
+
+
+                <TextView
+                    android:id="@+id/card_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/card_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@{viewModel.news.author}"
+                    tools:text="author"
+                    android:paddingStart="12dp">
+                </TextView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                tools:text="Dummy news Description"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_card" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="fill_vertical"
+                android:layout_marginTop="400dp"
+                android:paddingStart="8dp"
+                android:paddingTop="50dp"
+                android:paddingEnd="8dp"
+                android:text="@{viewModel.news.content}"
+                tools:text="Dummy news Description" />
+
+        </FrameLayout>
 </layout>
