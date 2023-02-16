@@ -63,7 +63,7 @@
                     android:id="@+id/news_author"
                     android:layout_width="345dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/news_title"
+                    android:layout_alignBottom="@id/news_title"
                     android:fontFamily="serif"
                     android:gravity="start"
                     android:paddingStart="24dp"
