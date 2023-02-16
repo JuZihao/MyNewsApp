@@ -8,9 +8,9 @@
             name="news"
             type="com.example.newsapp.network.NewsArticle" />
 
-<!--        <variable-->
-<!--            name="clickListener"-->
-<!--            type="com.example.newsapp.ui.NewListListener" />-->
+        <variable
+            name="clickListener"
+            type="com.example.newsapp.ui.NewListListener" />
 <!--        android:onClick="@{() -> clickListener.onClick(news)}"-->
 
     </data>
@@ -32,6 +32,7 @@
                 app:imageUrl="@{news.urlToImage}"
                 tools:src="@tools:sample/backgrounds/scenic"
                 app:shapeAppearanceOverlay="@style/roundimageview"
+                android:onClick="@{() -> clickListener.onClick(news)}"
                  />
 
 
