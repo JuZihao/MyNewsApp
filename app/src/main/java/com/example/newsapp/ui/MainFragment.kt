@@ -22,12 +22,15 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.newsList.adapter = NewsListAdapter()
-        binding.horizontalList.adapter = NewsListAdapter()
-//            NewsListAdapter(NewListListener {news ->
-//            viewModel.onNewsClicked(news)
-//            findNavController()
-//                .navigate(R.id.action_mainFragment_to_placeholder)})
+        binding.newsList.adapter = NewsListAdapter(NewListListener {news ->
+            viewModel.onNewsClicked(news)
+            findNavController()
+                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+        binding.horizontalList.adapter = NewsCardAdapter(NewCardsListener { news ->
+            viewModel.onNewsClicked(news)
+            findNavController()
+                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+
         return binding.root
     }
 

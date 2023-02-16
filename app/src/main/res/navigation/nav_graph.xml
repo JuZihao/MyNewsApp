@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.newsapp.ui.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_newsDetailFragment2"
+            app:destination="@id/newsDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailFragment2"
+        android:name="com.example.newsapp.ui.NewsDetailFragment"
+        android:label="NewsDetailFragment" />
 </navigation>
