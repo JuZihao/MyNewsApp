@@ -7,10 +7,5 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.newsapp.ui.MainFragment"
-        android:label="MainFragment" >
-        <action
-            android:id="@+id/action_mainFragment_to_placeholder"
-            app:destination="@id/placeholder" />
-    </fragment>
-    <fragment android:id="@+id/placeholder" />
+        android:label="MainFragment" />
 </navigation>

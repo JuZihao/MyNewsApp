@@ -4,42 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.newsapp.ui.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".NewsDetailFragment">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:src="@color/cardview_dark_background"></ImageView>
-
-        <TextView
-            android:id="@+id/title_card"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-            android:text="@{viewModel.news.title}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Dummy news title"/>
+            android:layout_height="match_parent"
+            tools:context=".NewsDetailFragment">
 
             <TextView
+                android:id="@+id/title_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></TextView>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+                android:text="@{viewModel.news.title}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Dummy news title" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                tools:text="Dummy news Description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_card" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
