@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="news"-->
+<!--            type="" />-->
+<!--    </data>-->
+<ImageView
+    android:id="@+id/news_image"
+    android:layout_width="match_parent"
+    android:layout_height="128dp"
+    android:scaleType="centerCrop"
+    android:adjustViewBounds="true"
+    android:layout_margin="4dp"
+    android:clipToOutline="true"
+    tools:src="@tools:sample/backgrounds/scenic"
+    android:background="@drawable/layout_bg"/>
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="start"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="24dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="This is the title of the news" />
+    <TextView
+        android:id="@+id/news_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="start"
+        android:layout_alignBottom="@id/news_image"
+        android:paddingStart="24dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="8dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Author" />
+
+    <TextView
+        android:id="@+id/news_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:layout_alignBottom="@id/news_image"
+        android:layout_alignEnd="@id/news_image"
+        android:paddingBottom="8dp"
+        android:paddingEnd="24dp"
+        android:paddingStart="0dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        tools:text="Sunday, 8 May 2021" />
+
+<!--        app:imageUrl="@{photo.imgSrcUrl}"-->
+</RelativeLayout>
