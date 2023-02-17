@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.newsapp.ui.MainViewModel" />
+            type="com.example.newsapp.views.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,15 +42,6 @@
                 android:background="@drawable/btn_selector"
                 android:textAllCaps="false"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/business"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"

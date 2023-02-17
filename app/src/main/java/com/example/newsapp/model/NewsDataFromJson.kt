@@ -1,4 +1,4 @@
-package com.example.newsapp.network
+package com.example.newsapp.model
 
 data class NewsDataFromJson(
     val articles: List<NewsArticle>,

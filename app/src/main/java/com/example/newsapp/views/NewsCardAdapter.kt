@@ -1,12 +1,11 @@
-package com.example.newsapp.ui
+package com.example.newsapp.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.HorizontalViewItemBinding
-import com.example.newsapp.network.NewsArticle
+import com.example.newsapp.model.NewsArticle
 
 class NewsCardAdapter(val clickListener: NewCardsListener) :
     ListAdapter<NewsArticle, NewsCardAdapter.NewCardsViewHolder>(NewsListAdapter) {
@@ -39,7 +38,6 @@ class NewsCardAdapter(val clickListener: NewCardsListener) :
         }
     }
 }
-
 
 class NewCardsListener(val clickListener: (news: NewsArticle) -> Unit) {
     fun onClick(news: NewsArticle) = clickListener(news)

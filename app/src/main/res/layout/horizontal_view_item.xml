@@ -4,10 +4,10 @@
     <data>
         <variable
             name="news"
-            type="com.example.newsapp.network.NewsArticle" />
+            type="com.example.newsapp.model.NewsArticle" />
         <variable
             name="clickListener"
-            type="com.example.newsapp.ui.NewCardsListener" />
+            type="com.example.newsapp.views.NewCardsListener" />
     </data>
 
             <RelativeLayout

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.newsapp.ui.MainViewModel" />
+            type="com.example.newsapp.views.MainViewModel" />
     </data>
 
 
@@ -15,7 +15,7 @@
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.newsapp.ui.MainFragment">
+        tools:context="com.example.newsapp.views.MainFragment">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"
@@ -69,25 +69,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:textColor="@color/black"
-                    android:text="@string/filter"
-                    android:padding="4dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/btn_selector"
-                    android:textAllCaps="false"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="@string/business"
-                    android:textColor="@color/black"
-                    android:padding="4dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/btn_selector"
-                    android:textAllCaps="false"/>
-                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/business"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:text="@string/business"

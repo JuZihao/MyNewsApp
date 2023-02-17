@@ -1,4 +1,4 @@
-package com.example.newsapp.ui
+package com.example.newsapp.views
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.newsList.adapter = NewsListAdapter(NewListListener {news ->
+        binding.newsList.adapter = NewsListAdapter(NewListListener { news ->
             viewModel.onNewsClicked(news)
             findNavController()
                 .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
@@ -34,8 +34,6 @@ class MainFragment : Fragment() {
             findNavController()
                 .navigate(R.id.action_mainFragment_to_allNewsFragment)
         }
-
-
         return binding.root
     }
 

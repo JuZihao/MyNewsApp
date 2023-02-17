@@ -1,15 +1,12 @@
-package com.example.newsapp.ui
+package com.example.newsapp.views
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.MainActivity
-import com.example.newsapp.network.NewsApi
-import com.example.newsapp.network.NewsArticle
+import com.example.newsapp.model.NewsApi
+import com.example.newsapp.model.NewsArticle
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
