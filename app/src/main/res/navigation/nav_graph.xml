@@ -11,9 +11,16 @@
         <action
             android:id="@+id/action_mainFragment_to_newsDetailFragment2"
             app:destination="@id/newsDetailFragment2" />
+        <action
+            android:id="@+id/action_mainFragment_to_allNewsFragment"
+            app:destination="@id/allNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsDetailFragment2"
         android:name="com.example.newsapp.ui.NewsDetailFragment"
         android:label="NewsDetailFragment" />
+    <fragment
+        android:id="@+id/allNewsFragment"
+        android:name="com.example.newsapp.ui.AllNewsFragment"
+        android:label="AllNewsFragment" />
 </navigation>

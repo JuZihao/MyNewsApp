@@ -10,6 +10,8 @@
     </data>
 
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
@@ -30,15 +32,17 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_bar"
-            android:text="Latest News"
+            android:text="@string/latest_news"
             tools:text="Latest News" />
 
-        <Button
+        <TextView
+            android:id="@+id/see_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/see_all"
+            android:textColor="@color/material_dynamic_primary50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_bar"
-            android:text="See all ->"
             tools:text="See all ->" />
 
 
@@ -80,4 +84,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:apiStatus="@{viewModel.status}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

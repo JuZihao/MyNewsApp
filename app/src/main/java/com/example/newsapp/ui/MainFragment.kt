@@ -1,6 +1,5 @@
 package com.example.newsapp.ui
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,6 +29,12 @@ class MainFragment : Fragment() {
             viewModel.onNewsClicked(news)
             findNavController()
                 .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+
+        binding.seeAll.setOnClickListener{
+            findNavController()
+                .navigate(R.id.action_mainFragment_to_allNewsFragment)
+        }
+
 
         return binding.root
     }
