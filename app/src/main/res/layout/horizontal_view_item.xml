@@ -69,7 +69,6 @@
                     app:layout_constraintBottom_toTopOf="@id/news_title"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@{news.author}"
-
                     tools:text="by Author" />
 
                 <TextView

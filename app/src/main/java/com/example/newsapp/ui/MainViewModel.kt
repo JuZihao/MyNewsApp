@@ -50,7 +50,7 @@ class MainViewModel : ViewModel() {
                 }
                 _newsList.value = rawNewsList
                 _status.value = NewsApiStatus.DONE
-                _size.value = "Received news from the api with size: ${rawNewsList.size}}"
+                _size.value = "Received news from the api with size: ${rawNewsList.size}"
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
                 _size.value = "API error:${e}}"

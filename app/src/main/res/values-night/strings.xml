@@ -2,4 +2,11 @@
 <resources>
     <string name="latest_news">Latest News</string>
     <string name="see_all"><![CDATA[See all ->]]></string>
+    <string name="business">Business</string>
+    <string name="filter">Filter</string>
+    <string name="general">General</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="technology">Technology</string>
+    <string name="science">Science</string>
+    <string name="health">Health</string>
 </resources>
