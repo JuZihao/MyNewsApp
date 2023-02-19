@@ -50,7 +50,7 @@
             android:layout_height="250dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:horizontalnews="@{viewModel.newsList.subList(0,5)}"
+            app:horizontalnews="@{viewModel.newsList}"
             app:reverseLayout="false"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +80,7 @@
                     android:textAllCaps="false"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/entertainment"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:text="@string/entertainment"
@@ -90,6 +91,7 @@
                     android:textAllCaps="false"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/general"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:text="@string/general"
@@ -100,6 +102,7 @@
                     android:textAllCaps="false"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/health"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:text="@string/health"
@@ -110,6 +113,7 @@
                     android:textAllCaps="false"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/science"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:text="@string/science"
@@ -119,6 +123,7 @@
                     android:background="@drawable/btn_selector"
                     android:textAllCaps="false"/>
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/technology"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:text="@string/technology"
@@ -143,7 +148,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category_bar"
-            app:listData="@{viewModel.newsList}"
+            app:listData="@{viewModel.categoryNewsList}"
             tools:itemCount="16"
             tools:listitem="@layout/linear_view_item" />
 

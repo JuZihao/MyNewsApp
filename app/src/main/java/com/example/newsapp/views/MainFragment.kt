@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), View.OnClickListener{
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -34,7 +34,26 @@ class MainFragment : Fragment() {
             findNavController()
                 .navigate(R.id.action_mainFragment_to_allNewsFragment)
         }
+
+        binding.business.setOnClickListener(this)
+        binding.entertainment.setOnClickListener(this)
+        binding.general.setOnClickListener(this)
+        binding.science.setOnClickListener(this)
+        binding.health.setOnClickListener(this)
+        binding.technology.setOnClickListener(this)
+
         return binding.root
     }
 
+    override fun onClick(v: View) {
+        when(v.id) {
+            R.id.business -> viewModel.changeNewsCategory(NewsCategories.BUSINESS)
+            R.id.entertainment -> viewModel.changeNewsCategory(NewsCategories.ENTERTAINMENT)
+            R.id.general -> viewModel.changeNewsCategory(NewsCategories.GENERAL)
+            R.id.science -> viewModel.changeNewsCategory(NewsCategories.SCIENCE)
+            R.id.health -> viewModel.changeNewsCategory(NewsCategories.HEALTH)
+            R.id.technology -> viewModel.changeNewsCategory(NewsCategories.TECHNOLOGY)
+            else-> viewModel.changeNewsCategory(NewsCategories.LATEST)
+        }
+    }
 }
