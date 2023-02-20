@@ -22,16 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="true"/>
 
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/latest_news"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_bar"
-            android:text="@string/latest_news"
             tools:text="Latest News" />
 
         <TextView
@@ -40,6 +42,7 @@
             android:layout_height="wrap_content"
             android:text="@string/see_all"
             android:textColor="@color/material_dynamic_primary50"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_bar"
             tools:text="See all ->" />
@@ -50,7 +53,7 @@
             android:layout_height="250dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:horizontalnews="@{viewModel.newsList}"
+            app:horizontalnews="@{viewModel.newsList.subList(0,5)}"
             app:reverseLayout="false"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"

@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:textColor="@color/black"
@@ -42,64 +43,71 @@
                 android:background="@drawable/btn_selector"
                 android:textAllCaps="false"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/business"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/business"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/business"
+                    android:textColor="@color/black"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_selector"
+                    android:textAllCaps="false"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/entertainment"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/entertainment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/entertainment"
+                    android:textColor="@color/black"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_selector"
+                    android:textAllCaps="false"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/general"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/general"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/general"
+                    android:textColor="@color/black"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_selector"
+                    android:textAllCaps="false"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/health"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/health"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/health"
+                    android:textColor="@color/black"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_selector"
+                    android:textAllCaps="false"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/science"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/technology"
-                android:textColor="@color/black"
-                android:padding="4dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/science"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/science"
+                    android:textColor="@color/black"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_selector"
+                    android:textAllCaps="false"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/technology"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/technology"
+                    android:textColor="@color/black"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/btn_selector"
+                    android:textAllCaps="false"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -121,7 +129,7 @@
             app:layout_constraintTop_toBottomOf="@id/total_news"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="10dp"
-            app:listData="@{viewModel.newsList}"
+            app:listData="@{viewModel.categoryNewsList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="16"
             tools:listitem="@layout/linear_view_item"

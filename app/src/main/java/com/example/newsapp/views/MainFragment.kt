@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
@@ -31,9 +32,29 @@ class MainFragment : Fragment(), View.OnClickListener{
                 .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
 
         binding.seeAll.setOnClickListener{
+            viewModel.changeNewsCategory(NewsCategories.LATEST)
             findNavController()
                 .navigate(R.id.action_mainFragment_to_allNewsFragment)
         }
+
+        binding.searchBar.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query.isNullOrBlank()) {
+                    return false
+                } else {
+                    findNavController()
+                        .navigate(R.id.action_mainFragment_to_allNewsFragment)
+                    viewModel.getQueryNews(query)
+                    binding.searchBar.setQuery("", false)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        }
+        )
 
         binding.business.setOnClickListener(this)
         binding.entertainment.setOnClickListener(this)

@@ -57,17 +57,20 @@ class MainViewModel : ViewModel() {
             try {
                 val latestNewsTag = NewsCategories.LATEST.toString()
                 val latestNews = NewsApi.retrofitService.getNews("us").articles
+
                 rawNewsList[latestNewsTag] =  latestNews
-                _newsList.value = processData(latestNews)
-                _status.value = NewsApiStatus.DONE
-                _size.value = "Received news from the api with size: ${latestNews.size}"
 
                 for (category in NewsCategories.values()) {
                     val currentCategory = category.toString()
                     val categoryNews = NewsApi.retrofitService.getNews("us", currentCategory).articles
-                    rawNewsList[currentCategory] = processData(categoryNews)
+                    val processedDate = processData(categoryNews)
+                    rawNewsList[currentCategory] = processedDate
+                    rawNewsList[latestNewsTag] = rawNewsList[latestNewsTag]!! + processedDate
                 }
 
+                _newsList.value = processData(latestNews)
+                _status.value = NewsApiStatus.DONE
+                _size.value = "Received news from the api with size: ${rawNewsList[latestNewsTag]!!.size}"
                 _categoryNewsList.value = rawNewsList[NewsCategories.BUSINESS.toString()]
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
@@ -94,7 +97,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun processData(newsList: List<NewsArticle>) : List<NewsArticle> {
+    private fun processData(newsList: List<NewsArticle>) : List<NewsArticle> {
         for (news in newsList) {
             val date = inputFormat.parse(news.publishedAt)
             news.publishedAt = dateFormatter.format(date)
@@ -103,4 +106,23 @@ class MainViewModel : ViewModel() {
         return newsList
     }
 
+    fun getQueryNews(query: String) {
+        //val filteredNews = //rawNewsList[NewsCategories.LATEST.toString()]!!
+        viewModelScope.launch {
+            try {
+                val queryNews = NewsApi.retrofitService.getNews("us", query = query).articles
+                if (queryNews.isEmpty()) {
+                    _size.value = "No results for ${query}"
+                    _categoryNewsList.value = listOf()
+                } else {
+                    _categoryNewsList.value = processData(queryNews)
+                    _size.value = "About ${queryNews.size} results for ${query}"
+                }
+            } catch (e: Exception) {
+                _status.value = NewsApiStatus.ERROR
+                _size.value = "API error:${e}}"
+                _categoryNewsList.value = listOf()
+            }
+        }
+    }
 }
