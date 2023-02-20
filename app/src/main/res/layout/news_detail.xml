@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
-            type="com.example.newsapp.ui.MainViewModel" />
+            type="com.example.newsapp.views.MainViewModel" />
     </data>
 
 
@@ -16,11 +15,10 @@
             android:layout_height="match_parent"
             tools:context=".NewsDetailFragment">
 
-
             <ImageView
                 android:id="@+id/newsDetailImg"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="375dp"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.news.urlToImage}"
                 tools:src="@tools:sample/backgrounds/scenic"
@@ -29,7 +27,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/title_card"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="10dp"
                 app:cardCornerRadius="20dp"

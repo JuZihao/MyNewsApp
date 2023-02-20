@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">News App</string>
-    <string name="image_description">Image Description</string>
     <string name="latest_news">Latest News</string>
     <string name="see_all"><![CDATA[See all ->]]></string>
     <string name="business">Business</string>

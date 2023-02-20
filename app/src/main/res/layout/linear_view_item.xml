@@ -6,11 +6,11 @@
     <data>
         <variable
             name="news"
-            type="com.example.newsapp.network.NewsArticle" />
+            type="com.example.newsapp.model.NewsArticle" />
 
         <variable
             name="clickListener"
-            type="com.example.newsapp.ui.NewListListener" />
+            type="com.example.newsapp.views.NewListListener" />
     </data>
 
             <RelativeLayout

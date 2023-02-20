@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -8,68 +9,39 @@
             name="viewModel"
             type="com.example.newsapp.views.MainViewModel" />
     </data>
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.newsapp.views.MainFragment">
+        android:layout_height="match_parent">
+
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:clickable="true"/>
-
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/latest_news"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_bar"
-            tools:text="Latest News" />
-
-        <TextView
-            android:id="@+id/see_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/see_all"
-            android:textColor="@color/material_dynamic_primary50"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_bar"
-            tools:text="See all ->" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/horizontal_list"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:horizontalnews="@{viewModel.newsList.subList(0,5)}"
-            app:reverseLayout="false"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:itemCount="16"
-            tools:listitem="@layout/horizontal_view_item" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <HorizontalScrollView
             android:id="@+id/category_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_list"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
             >
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:textColor="@color/black"
+                android:text="@string/filter"
+                android:padding="4dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/btn_selector"
+                android:textAllCaps="false"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/business"
@@ -125,6 +97,7 @@
                     android:layout_margin="4dp"
                     android:background="@drawable/btn_selector"
                     android:textAllCaps="false"/>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/technology"
                     android:layout_width="wrap_content"
@@ -140,33 +113,28 @@
 
         </HorizontalScrollView>
 
+        <TextView
+            android:id="@+id/total_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/category_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="@{viewModel.size}" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/news_list"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/category_bar"
-            app:listData="@{viewModel.categoryNewsList}"
-            tools:itemCount="16"
-            tools:listitem="@layout/linear_view_item" />
-
-
-
-        <ImageView
-            android:id="@+id/status_image"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:apiStatus="@{viewModel.status}" />
+            app:layout_constraintTop_toBottomOf="@id/total_news"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            app:listData="@{viewModel.categoryNewsList}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="16"
+            tools:listitem="@layout/linear_view_item"
+            />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>

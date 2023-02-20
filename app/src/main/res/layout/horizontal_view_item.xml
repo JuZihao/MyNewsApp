@@ -4,28 +4,19 @@
     <data>
         <variable
             name="news"
-            type="com.example.newsapp.network.NewsArticle" />
+            type="com.example.newsapp.model.NewsArticle" />
         <variable
             name="clickListener"
-            type="com.example.newsapp.ui.NewCardsListener" />
+            type="com.example.newsapp.views.NewCardsListener" />
     </data>
 
             <RelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp">
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/news_image"-->
-<!--                    android:layout_width="345dp"-->
-<!--                    android:layout_height="240dp"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:onClick="@{() -> clickListener.onClick(news)}"-->
-<!--                    app:cardCornerRadius="15dp"-->
-<!--                    app:cardElevation="0dp">-->
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/top_img"
@@ -38,10 +29,9 @@
                         app:shapeAppearanceOverlay="@style/roundimageview"
                         android:onClick="@{() -> clickListener.onClick(news)}"
                         />
-
-
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="240dp">
                 <TextView
                     android:id="@+id/news_title"
                     android:layout_width="345dp"
@@ -57,13 +47,17 @@
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:text="@{news.title}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="This is the title of the news and a long text" />
 
                 <TextView
                     android:id="@+id/news_author"
                     android:layout_width="345dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/news_title"
+                    android:layout_alignBottom="@id/news_title"
                     android:fontFamily="serif"
                     android:gravity="start"
                     android:paddingStart="24dp"
@@ -72,6 +66,8 @@
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="normal"
+                    app:layout_constraintBottom_toTopOf="@id/news_title"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:text="@{news.author}"
                     tools:text="by Author" />
 
@@ -80,8 +76,6 @@
                     android:layout_width="345dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
-                    android:layout_alignBottom="@id/top_img"
-                    android:layout_alignStart="@id/top_img"
                     android:paddingBottom="8dp"
                     android:paddingEnd="12dp"
                     android:paddingStart="24dp"
@@ -89,6 +83,9 @@
                     android:textSize="12sp"
                     android:textStyle="normal"
                     android:text="@{news.publishedAt}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="Descriptions of the news article and a line of text about the article" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
 </layout>

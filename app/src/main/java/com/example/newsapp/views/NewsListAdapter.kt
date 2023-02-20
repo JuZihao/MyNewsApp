@@ -1,10 +1,10 @@
-package com.example.newsapp.ui
+package com.example.newsapp.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapp.network.NewsArticle
+import com.example.newsapp.model.NewsArticle
 import androidx.recyclerview.widget.ListAdapter
 import com.example.newsapp.databinding.LinearViewItemBinding
 
