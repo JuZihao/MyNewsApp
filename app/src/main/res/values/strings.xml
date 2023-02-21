@@ -10,4 +10,10 @@
     <string name="technology">Technology</string>
     <string name="science">Science</string>
     <string name="health">Health</string>
+    <string name="reset">Reset</string>
+    <string name="sort_by">Sort By</string>
+    <string name="recommended">Recommended</string>
+    <string name="latest">Latest</string>
+    <string name="most_viewed">Most Viewed</string>
+    <string name="save">Save</string>
 </resources>

@@ -24,7 +24,7 @@ enum class NewsCategories(val message: String) {
     override fun toString() = message
 }
 
-
+enum class SortByTypes {DEFAULT, RECOMMENDED, LATEST, VIEW}
 class MainViewModel : ViewModel() {
 
     val rawNewsList: MutableMap<String, List<NewsArticle>> = mutableMapOf()
@@ -55,28 +55,22 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = NewsApiStatus.LOADING
             try {
+                getCategoryNews(NewsCategories.BUSINESS.toString())
+                setCategoryNewsList(rawNewsList[NewsCategories.BUSINESS.toString()])
+
                 val latestNewsTag = NewsCategories.LATEST.toString()
                 val latestNews = NewsApi.retrofitService.getNews("us").articles
-
                 rawNewsList[latestNewsTag] =  latestNews
-
-                for (category in NewsCategories.values()) {
-                    val currentCategory = category.toString()
-                    val categoryNews = NewsApi.retrofitService.getNews("us", currentCategory).articles
-                    val processedDate = processData(categoryNews)
-                    rawNewsList[currentCategory] = processedDate
-                    rawNewsList[latestNewsTag] = rawNewsList[latestNewsTag]!! + processedDate
-                }
-
                 _newsList.value = processData(latestNews)
                 _status.value = NewsApiStatus.DONE
                 _size.value = "Received news from the api with size: ${rawNewsList[latestNewsTag]!!.size}"
-                _categoryNewsList.value = rawNewsList[NewsCategories.BUSINESS.toString()]
+
+
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
                 _size.value = "API error:${e}}"
                 _newsList.value = listOf()
-                _categoryNewsList.value = listOf()
+                setCategoryNewsList(listOf())
             }
         }
     }
@@ -88,11 +82,11 @@ class MainViewModel : ViewModel() {
     fun changeNewsCategory(category: NewsCategories = NewsCategories.BUSINESS) {
         when (category){
             NewsCategories.BUSINESS -> _categoryNewsList.value = rawNewsList[NewsCategories.BUSINESS.toString()]
-            NewsCategories.ENTERTAINMENT -> _categoryNewsList.value = rawNewsList[NewsCategories.ENTERTAINMENT.toString()]
-            NewsCategories.GENERAL -> _categoryNewsList.value = rawNewsList[NewsCategories.GENERAL.toString()]
-            NewsCategories.TECHNOLOGY -> _categoryNewsList.value = rawNewsList[NewsCategories.TECHNOLOGY.toString()]
-            NewsCategories.HEALTH -> _categoryNewsList.value = rawNewsList[NewsCategories.HEALTH.toString()]
-            NewsCategories.SCIENCE -> _categoryNewsList.value = rawNewsList[NewsCategories.SCIENCE.toString()]
+            NewsCategories.ENTERTAINMENT -> getCategoryNews(NewsCategories.ENTERTAINMENT.toString())
+            NewsCategories.GENERAL -> getCategoryNews(NewsCategories.GENERAL.toString())
+            NewsCategories.TECHNOLOGY -> getCategoryNews(NewsCategories.TECHNOLOGY.toString())
+            NewsCategories.HEALTH -> getCategoryNews(NewsCategories.HEALTH.toString())
+            NewsCategories.SCIENCE -> getCategoryNews(NewsCategories.SCIENCE.toString())
             else -> _categoryNewsList.value = rawNewsList[NewsCategories.LATEST.toString()]
         }
     }
@@ -107,22 +101,44 @@ class MainViewModel : ViewModel() {
     }
 
     fun getQueryNews(query: String) {
-        //val filteredNews = //rawNewsList[NewsCategories.LATEST.toString()]!!
         viewModelScope.launch {
             try {
                 val queryNews = NewsApi.retrofitService.getNews("us", query = query).articles
                 if (queryNews.isEmpty()) {
                     _size.value = "No results for ${query}"
-                    _categoryNewsList.value = listOf()
+                    setCategoryNewsList(listOf())
                 } else {
-                    _categoryNewsList.value = processData(queryNews)
+                    setCategoryNewsList(processData(queryNews))
                     _size.value = "About ${queryNews.size} results for ${query}"
                 }
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
                 _size.value = "API error:${e}}"
-                _categoryNewsList.value = listOf()
+                setCategoryNewsList(listOf())
             }
         }
+    }
+
+    fun getCategoryNews(category: String) {
+        if (rawNewsList[category].isNullOrEmpty()) {
+            viewModelScope.launch {
+                try {
+                    val categoryNews = NewsApi.retrofitService.getNews("us", category).articles
+                    val processedDate = processData(categoryNews)
+                    rawNewsList[category] = processedDate
+                    setCategoryNewsList(rawNewsList[category])
+                } catch (e: Exception) {
+                    _status.value = NewsApiStatus.ERROR
+                    _size.value = "API error:${e}}"
+                    _categoryNewsList.value = listOf()
+                }
+            }
+        } else {
+            setCategoryNewsList(rawNewsList[category])
+        }
+    }
+
+    private fun setCategoryNewsList(news: List<NewsArticle>?) {
+        _categoryNewsList.value = news
     }
 }

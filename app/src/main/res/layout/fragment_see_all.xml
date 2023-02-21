@@ -41,7 +41,8 @@
                 android:padding="4dp"
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_selector"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:drawableStart="@drawable/ic_broken_image"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/business"
@@ -134,6 +135,19 @@
             tools:itemCount="16"
             tools:listitem="@layout/linear_view_item"
             />
+
+        <TextView
+            android:id="@+id/gray_background"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="#99BFBFBF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            />
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

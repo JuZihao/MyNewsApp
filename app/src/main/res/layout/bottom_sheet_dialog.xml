@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/filter_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:visibility="visible"
+            />
+
+        <TextView
+            android:id="@+id/filter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/filter_text"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/btn_selector"
+            android:text="@string/reset"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/sort_by_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_alignStart="@id/filter_text"
+            android:layout_alignTop="@id/filter_text"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"/>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/button_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignTop="@id/sort_by_text"
+            android:layout_alignStart="@id/sort_by_text"
+            android:layout_marginTop="24dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/recommended"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:padding="4dp"
+                android:background="@drawable/btn_selector"
+                android:text="@string/recommended"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:layout_marginEnd="5dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/latest"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/btn_selector"
+                android:text="@string/latest"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:layout_marginEnd="5dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/most_viewed"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:padding="4dp"
+                android:background="@drawable/btn_selector"
+                android:text="@string/most_viewed"
+                android:textAllCaps="false"
+                android:textColor="@color/black" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/button_list"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/btn_selector"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+

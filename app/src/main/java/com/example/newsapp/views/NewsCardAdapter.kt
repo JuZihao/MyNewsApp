@@ -13,14 +13,14 @@ class NewsCardAdapter(val clickListener: NewCardsListener) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NewsCardAdapter.NewCardsViewHolder {
+    ): NewCardsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return NewCardsViewHolder(
             HorizontalViewItemBinding.inflate(layoutInflater)
         )
     }
 
-    override fun onBindViewHolder(holder: NewsCardAdapter.NewCardsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewCardsViewHolder, position: Int) {
         val news = getItem(position)
         holder.bind(news, clickListener)
     }
