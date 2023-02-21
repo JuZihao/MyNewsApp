@@ -1,6 +1,5 @@
 package com.example.newsapp.views
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,17 +54,16 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = NewsApiStatus.LOADING
             try {
+                val latestNewsTag = NewsCategories.LATEST.toString()
+                val latestNews = NewsApi.retrofitService.getNews("us").articles
+                rawNewsList[latestNewsTag] =  processData(latestNews)
+                _newsList.value = rawNewsList[latestNewsTag]
+
                 getCategoryNews(NewsCategories.BUSINESS.toString())
                 setCategoryNewsList(rawNewsList[NewsCategories.BUSINESS.toString()])
 
-                val latestNewsTag = NewsCategories.LATEST.toString()
-                val latestNews = NewsApi.retrofitService.getNews("us").articles
-                rawNewsList[latestNewsTag] =  latestNews
-                _newsList.value = processData(latestNews)
                 _status.value = NewsApiStatus.DONE
                 _size.value = "Received news from the api with size: ${rawNewsList[latestNewsTag]!!.size}"
-
-
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
                 _size.value = "API error:${e}}"
@@ -105,11 +103,11 @@ class MainViewModel : ViewModel() {
             try {
                 val queryNews = NewsApi.retrofitService.getNews("us", query = query).articles
                 if (queryNews.isEmpty()) {
-                    _size.value = "No results for ${query}"
+                    _size.value = "No results for $query"
                     setCategoryNewsList(listOf())
                 } else {
                     setCategoryNewsList(processData(queryNews))
-                    _size.value = "About ${queryNews.size} results for ${query}"
+                    _size.value = "About ${queryNews.size} results for $query"
                 }
             } catch (e: Exception) {
                 _status.value = NewsApiStatus.ERROR
@@ -124,8 +122,8 @@ class MainViewModel : ViewModel() {
             viewModelScope.launch {
                 try {
                     val categoryNews = NewsApi.retrofitService.getNews("us", category).articles
-                    val processedDate = processData(categoryNews)
-                    rawNewsList[category] = processedDate
+                    val processedData = processData(categoryNews)
+                    rawNewsList[category] = processedData
                     setCategoryNewsList(rawNewsList[category])
                 } catch (e: Exception) {
                     _status.value = NewsApiStatus.ERROR
@@ -139,6 +137,24 @@ class MainViewModel : ViewModel() {
     }
 
     private fun setCategoryNewsList(news: List<NewsArticle>?) {
-        _categoryNewsList.value = news
+        if (news.isNullOrEmpty()) {
+            _categoryNewsList.value = listOf()
+        } else {
+            _categoryNewsList.value = news!!
+        }
+    }
+
+    fun applyFilter(filterType: SortByTypes) {
+        when (filterType) {
+            SortByTypes.DEFAULT -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
+            SortByTypes.RECOMMENDED -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
+            SortByTypes.LATEST -> {
+                setCategoryNewsList(_categoryNewsList.value?.sortedByDescending {
+                    dateFormatter.parse(it.publishedAt)
+                }
+                )
+            }
+            SortByTypes.VIEW -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
+        }
     }
 }
