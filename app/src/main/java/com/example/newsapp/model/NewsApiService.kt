@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-private const val API_KEY ="f33163cc4d4b4b9295d1a8322bdf3a69"
+private const val API_KEY ="f92eea7e7306413586f358631a341e51"
 private const val BASE_IRL ="https://newsapi.org/v2/"
 
 

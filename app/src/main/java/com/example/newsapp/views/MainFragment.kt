@@ -14,12 +14,13 @@ import com.example.newsapp.databinding.FragmentMainBinding
 class MainFragment : Fragment(), View.OnClickListener{
 
     private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMainBinding.inflate(inflater)
+        binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.newsList.adapter = NewsListAdapter(NewListListener { news ->
@@ -57,6 +58,7 @@ class MainFragment : Fragment(), View.OnClickListener{
         )
 
         binding.business.setOnClickListener(this)
+        binding.business.isSelected = true
         binding.entertainment.setOnClickListener(this)
         binding.general.setOnClickListener(this)
         binding.science.setOnClickListener(this)
@@ -68,13 +70,46 @@ class MainFragment : Fragment(), View.OnClickListener{
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.business -> viewModel.changeNewsCategory(NewsCategories.BUSINESS)
-            R.id.entertainment -> viewModel.changeNewsCategory(NewsCategories.ENTERTAINMENT)
-            R.id.general -> viewModel.changeNewsCategory(NewsCategories.GENERAL)
-            R.id.science -> viewModel.changeNewsCategory(NewsCategories.SCIENCE)
-            R.id.health -> viewModel.changeNewsCategory(NewsCategories.HEALTH)
-            R.id.technology -> viewModel.changeNewsCategory(NewsCategories.TECHNOLOGY)
+            R.id.business -> {
+                viewModel.changeNewsCategory(NewsCategories.BUSINESS)
+                clearCategorySelected()
+                binding.business.isSelected = true
+            }
+            R.id.entertainment -> {
+                viewModel.changeNewsCategory(NewsCategories.ENTERTAINMENT)
+                clearCategorySelected()
+                binding.entertainment.isSelected = true
+            }
+            R.id.general -> {
+                viewModel.changeNewsCategory(NewsCategories.GENERAL)
+                clearCategorySelected()
+                binding.general.isSelected = true
+            }
+            R.id.science -> {
+                viewModel.changeNewsCategory(NewsCategories.SCIENCE)
+                clearCategorySelected()
+                binding.science.isSelected = true
+            }
+            R.id.health -> {
+                viewModel.changeNewsCategory(NewsCategories.HEALTH)
+                clearCategorySelected()
+                binding.health.isSelected = true
+            }
+            R.id.technology -> {
+                viewModel.changeNewsCategory(NewsCategories.TECHNOLOGY)
+                clearCategorySelected()
+                binding.technology.isSelected = true
+            }
             else-> viewModel.changeNewsCategory(NewsCategories.LATEST)
         }
+    }
+
+    private fun clearCategorySelected() {
+        binding.business.isSelected = false
+        binding.entertainment.isSelected = false
+        binding.general.isSelected = false
+        binding.science.isSelected = false
+        binding.health.isSelected = false
+        binding.technology.isSelected = false
     }
 }
