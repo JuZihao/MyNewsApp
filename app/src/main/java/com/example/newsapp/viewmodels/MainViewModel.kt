@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.model.NewsApi
 import com.example.newsapp.model.NewsArticle
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
@@ -85,7 +86,10 @@ class MainViewModel : ViewModel() {
             NewsCategories.TECHNOLOGY -> getCategoryNews(NewsCategories.TECHNOLOGY.toString())
             NewsCategories.HEALTH -> getCategoryNews(NewsCategories.HEALTH.toString())
             NewsCategories.SCIENCE -> getCategoryNews(NewsCategories.SCIENCE.toString())
-            else -> _categoryNewsList.value = rawNewsList[NewsCategories.LATEST.toString()]
+            else -> {
+                _categoryNewsList.value = rawNewsList[NewsCategories.LATEST.toString()]
+                _size.value = "About ${rawNewsList[NewsCategories.LATEST.toString()]?.size} results for All News"
+            }
         }
     }
 
@@ -93,6 +97,9 @@ class MainViewModel : ViewModel() {
         for (news in newsList) {
             val date = inputFormat.parse(news.publishedAt)
             news.publishedAt = dateFormatter.format(date)
+
+            val text = news.content?.split("[")
+            news.content = text?.get(0)
             //news.date = date
         }
         return newsList
@@ -124,6 +131,7 @@ class MainViewModel : ViewModel() {
                     val categoryNews = NewsApi.retrofitService.getNews("us", category).articles
                     val processedData = processData(categoryNews)
                     rawNewsList[category] = processedData
+                    rawNewsList[NewsCategories.LATEST.toString()] = rawNewsList[NewsCategories.LATEST.toString()]!! + processedData
                     setCategoryNewsList(rawNewsList[category])
                 } catch (e: Exception) {
                     _status.value = NewsApiStatus.ERROR
@@ -156,5 +164,9 @@ class MainViewModel : ViewModel() {
             }
             SortByTypes.VIEW -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
         }
+    }
+
+    fun getNewsUrl(): String? {
+        return news.value?.url
     }
 }

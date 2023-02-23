@@ -15,6 +15,18 @@
             android:layout_height="match_parent"
             tools:context=".NewsDetailFragment">
 
+            <ImageButton
+                android:id="@+id/backArrow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_arrow_back"
+                android:background="@drawable/arrow_round_shape"
+                android:elevation="@dimen/cardview_compat_inset_shadow"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:paddingStart="8dp">
+            </ImageButton>
+
             <ImageView
                 android:id="@+id/newsDetailImg"
                 android:layout_width="match_parent"
@@ -26,13 +38,13 @@
                 />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/title_card"
+                android:id="@+id/titleCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="10dp"
                 app:cardCornerRadius="20dp"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#f5bababa"
                 app:cardMaxElevation="12dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true"
@@ -54,27 +66,29 @@
                     android:paddingStart="12dp">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/card_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/card_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@{viewModel.news.title}"
-                    tools:text="title"
-                    android:paddingStart="12dp"/>
+                    <TextView
+                        android:id="@+id/card_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:paddingStart="12dp"
+                        android:text="@{viewModel.news.title}"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/card_date"
+                        tools:text="title" />
 
 
-                <TextView
-                    android:id="@+id/card_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/card_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@{viewModel.news.author}"
-                    tools:text="author"
-                    android:paddingStart="12dp">
-                </TextView>
+                    <TextView
+                        android:id="@+id/card_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="12dp"
+                        android:text="@{viewModel.news.author}"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/card_title"
+                        tools:text="author" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -85,12 +99,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill_vertical"
-                android:layout_marginTop="400dp"
+                android:layout_marginTop="500dp"
                 android:paddingStart="8dp"
-                android:paddingTop="50dp"
                 android:paddingEnd="8dp"
-                android:text="@{viewModel.news.content}"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:text=""
                 tools:text="Dummy news Description" />
+
+            <ImageButton
+                android:id="@+id/shareBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_share"
+                android:src="@drawable/ic_share"
+                android:layout_marginStart="350dp"
+                android:layout_marginTop="675dp" />
 
         </FrameLayout>
 </layout>
