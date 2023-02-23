@@ -42,7 +42,7 @@
                 android:layout_margin="4dp"
                 android:background="@drawable/btn_selector"
                 android:textAllCaps="false"
-                android:drawableStart="@drawable/ic_broken_image"/>
+                android:drawableStart="@drawable/ic_filter"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/business"
