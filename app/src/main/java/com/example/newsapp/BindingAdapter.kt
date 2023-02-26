@@ -7,9 +7,9 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.newsapp.model.NewsArticle
-import com.example.newsapp.views.NewsApiStatus
-import com.example.newsapp.views.NewsCardAdapter
-import com.example.newsapp.views.NewsListAdapter
+import com.example.newsapp.ui.NewsApiStatus
+import com.example.newsapp.ui.NewsCardAdapter
+import com.example.newsapp.ui.NewsListAdapter
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

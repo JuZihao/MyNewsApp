@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="com.example.newsapp.views.NewListListener" />
+            type="com.example.newsapp.ui.NewListListener" />
     </data>
 
             <RelativeLayout

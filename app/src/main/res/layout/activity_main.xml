@@ -21,6 +21,6 @@
         app:navGraph="@navigation/nav_graph"
         />
 
-<!--    android:name="com.example.newsapp.ui.MainFragment"\-->
+<!--    android:name="com.example.newsapp.ui.fragment.MainFragment"\-->
 </FrameLayout>
 

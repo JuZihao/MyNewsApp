@@ -1,4 +1,4 @@
-package com.example.newsapp.views
+package com.example.newsapp.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.model.NewsApi
 import com.example.newsapp.model.NewsArticle
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
@@ -27,7 +26,7 @@ enum class NewsCategories(val message: String) {
 enum class SortByTypes {DEFAULT, RECOMMENDED, LATEST, VIEW}
 class MainViewModel : ViewModel() {
 
-    val rawNewsList: MutableMap<String, List<NewsArticle>> = mutableMapOf()
+    val rawNewsList: MutableMap<NewsCategories, List<NewsArticle>> = mutableMapOf()
 
     private val _status = MutableLiveData<NewsApiStatus>()
     val status: LiveData<NewsApiStatus> = _status
@@ -55,13 +54,13 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = NewsApiStatus.LOADING
             try {
-                val latestNewsTag = NewsCategories.LATEST.toString()
+                val latestNewsTag = NewsCategories.LATEST
                 val latestNews = NewsApi.retrofitService.getNews("us").articles
                 rawNewsList[latestNewsTag] =  processData(latestNews)
                 _newsList.value = rawNewsList[latestNewsTag]
 
-                getCategoryNews(NewsCategories.BUSINESS.toString())
-                setCategoryNewsList(rawNewsList[NewsCategories.BUSINESS.toString()])
+                getCategoryNews(NewsCategories.BUSINESS)
+                setCategoryNewsList(rawNewsList[NewsCategories.BUSINESS])
 
                 _status.value = NewsApiStatus.DONE
                 _size.value = "Received news from the api with size: ${rawNewsList[latestNewsTag]!!.size}"
@@ -80,15 +79,15 @@ class MainViewModel : ViewModel() {
 
     fun changeNewsCategory(category: NewsCategories = NewsCategories.BUSINESS) {
         when (category){
-            NewsCategories.BUSINESS -> _categoryNewsList.value = rawNewsList[NewsCategories.BUSINESS.toString()]
-            NewsCategories.ENTERTAINMENT -> getCategoryNews(NewsCategories.ENTERTAINMENT.toString())
-            NewsCategories.GENERAL -> getCategoryNews(NewsCategories.GENERAL.toString())
-            NewsCategories.TECHNOLOGY -> getCategoryNews(NewsCategories.TECHNOLOGY.toString())
-            NewsCategories.HEALTH -> getCategoryNews(NewsCategories.HEALTH.toString())
-            NewsCategories.SCIENCE -> getCategoryNews(NewsCategories.SCIENCE.toString())
+            NewsCategories.BUSINESS -> _categoryNewsList.value = rawNewsList[NewsCategories.BUSINESS]
+            NewsCategories.ENTERTAINMENT -> getCategoryNews(NewsCategories.ENTERTAINMENT)
+            NewsCategories.GENERAL -> getCategoryNews(NewsCategories.GENERAL)
+            NewsCategories.TECHNOLOGY -> getCategoryNews(NewsCategories.TECHNOLOGY)
+            NewsCategories.HEALTH -> getCategoryNews(NewsCategories.HEALTH)
+            NewsCategories.SCIENCE -> getCategoryNews(NewsCategories.SCIENCE)
             else -> {
-                _categoryNewsList.value = rawNewsList[NewsCategories.LATEST.toString()]
-                _size.value = "About ${rawNewsList[NewsCategories.LATEST.toString()]?.size} results for All News"
+                _categoryNewsList.value = rawNewsList[NewsCategories.LATEST]
+                _size.value = "About ${rawNewsList[NewsCategories.LATEST]?.size} results for All News"
             }
         }
     }
@@ -100,7 +99,6 @@ class MainViewModel : ViewModel() {
 
             val text = news.content?.split("[")
             news.content = text?.get(0)
-            //news.date = date
         }
         return newsList
     }
@@ -124,14 +122,14 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getCategoryNews(category: String) {
+    fun getCategoryNews(category: NewsCategories) {
         if (rawNewsList[category].isNullOrEmpty()) {
             viewModelScope.launch {
                 try {
-                    val categoryNews = NewsApi.retrofitService.getNews("us", category).articles
+                    val categoryNews = NewsApi.retrofitService.getNews("us", category.toString()).articles
                     val processedData = processData(categoryNews)
                     rawNewsList[category] = processedData
-                    rawNewsList[NewsCategories.LATEST.toString()] = rawNewsList[NewsCategories.LATEST.toString()]!! + processedData
+                    rawNewsList[NewsCategories.LATEST] = rawNewsList[NewsCategories.LATEST]!! + processedData
                     setCategoryNewsList(rawNewsList[category])
                 } catch (e: Exception) {
                     _status.value = NewsApiStatus.ERROR
@@ -154,15 +152,15 @@ class MainViewModel : ViewModel() {
 
     fun applyFilter(filterType: SortByTypes) {
         when (filterType) {
-            SortByTypes.DEFAULT -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
-            SortByTypes.RECOMMENDED -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
+            SortByTypes.DEFAULT -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST])
+            SortByTypes.RECOMMENDED -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST])
             SortByTypes.LATEST -> {
                 setCategoryNewsList(_categoryNewsList.value?.sortedByDescending {
                     dateFormatter.parse(it.publishedAt)
                 }
                 )
             }
-            SortByTypes.VIEW -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST.toString()])
+            SortByTypes.VIEW -> setCategoryNewsList(rawNewsList[NewsCategories.LATEST])
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.newsapp.views
+package com.example.newsapp.ui.fragment
 
 import android.content.Intent
 import android.graphics.Color
@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.databinding.NewsDetailBinding
+import com.example.newsapp.ui.MainViewModel
 
 class NewsDetailFragment: Fragment() {
 

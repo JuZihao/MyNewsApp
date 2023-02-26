@@ -1,4 +1,4 @@
-package com.example.newsapp.views
+package com.example.newsapp.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentMainBinding
+import com.example.newsapp.ui.*
 
 class MainFragment : Fragment(), View.OnClickListener{
 
