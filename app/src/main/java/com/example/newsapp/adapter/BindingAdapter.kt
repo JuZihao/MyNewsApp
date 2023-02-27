@@ -6,23 +6,20 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.newsapp.model.NewsArticle
+import com.bumptech.glide.Glide
+import com.example.newsapp.domain.model.NewsArticle
 import com.example.newsapp.ui.NewsApiStatus
 import com.example.newsapp.ui.NewsCardAdapter
 import com.example.newsapp.ui.NewsListAdapter
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        if (imgUri == null) {
-            imgView.load(R.drawable.ic_broken_image)
-        } else {
-            imgView.load(imgUri) {
-                this.placeholder(R.drawable.loading_img)
-            }
-        }
-    }
+
+    Glide.with(imgView.context)
+        .load(imgUrl)
+        .placeholder(R.drawable.loading_img)
+        .error(R.drawable.ic_broken_image)
+        .into(imgView)
 }
 
 @BindingAdapter("listData")

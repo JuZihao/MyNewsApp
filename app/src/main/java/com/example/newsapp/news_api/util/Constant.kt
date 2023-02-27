@@ -1,4 +1,4 @@
-package com.example.newsapp.news_api.data
+package com.example.newsapp.news_api.util
 
 object Constant {
     const val API_KEY = "f92eea7e7306413586f358631a341e51"

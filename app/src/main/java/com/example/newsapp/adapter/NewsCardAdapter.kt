@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.HorizontalViewItemBinding
-import com.example.newsapp.model.NewsArticle
+import com.example.newsapp.domain.model.NewsArticle
 
 class NewsCardAdapter(val clickListener: NewCardsListener) :
     ListAdapter<NewsArticle, NewsCardAdapter.NewCardsViewHolder>(NewsListAdapter) {

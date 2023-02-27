@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentMainBinding
 import com.example.newsapp.ui.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment(), View.OnClickListener{
 
     private val viewModel: MainViewModel by activityViewModels()
@@ -34,7 +36,7 @@ class MainFragment : Fragment(), View.OnClickListener{
                 .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
 
         binding.seeAll.setOnClickListener{
-            viewModel.changeNewsCategory(NewsCategories.LATEST)
+            viewModel.getQueryNews("bitcoin")
             findNavController()
                 .navigate(R.id.action_mainFragment_to_allNewsFragment)
         }

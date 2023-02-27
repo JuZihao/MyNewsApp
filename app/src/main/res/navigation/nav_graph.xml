@@ -9,7 +9,7 @@
         android:name="com.example.newsapp.ui.fragment.MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_newsDetailFragment2"
-            app:destination="@id/newsDetailFragment2" />
+            app:destination="@id/newsDetailFragment2"/>
         <action
             android:id="@+id/action_mainFragment_to_allNewsFragment"
             app:destination="@id/allNewsFragment" />
