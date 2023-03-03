@@ -1,4 +1,4 @@
-package com.example.newsapp.model
+package com.example.newsapp.news_api
 
 import com.example.newsapp.domain.model.NewsDataFromJson
 import com.example.newsapp.news_api.util.Constant.API_KEY

@@ -14,7 +14,6 @@ import com.example.newsapp.ui.NewsListAdapter
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-
     Glide.with(imgView.context)
         .load(imgUrl)
         .placeholder(R.drawable.loading_img)

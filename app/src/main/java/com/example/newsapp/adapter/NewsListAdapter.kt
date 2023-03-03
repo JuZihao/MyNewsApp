@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.newsapp.databinding.LinearViewItemBinding
 
 
-class NewsListAdapter (val clickListener: NewListListener) :
+class NewsListAdapter (private val clickListener: NewListListener) :
         ListAdapter<NewsArticle, NewsListAdapter.NewListViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<NewsArticle>() {

@@ -1,6 +1,5 @@
 package com.example.newsapp.news_api
 
-import com.example.newsapp.model.NewsApiService
 import javax.inject.Inject
 
 class NewsApiServiceImpl @Inject constructor(private val apiService: NewsApiService) {

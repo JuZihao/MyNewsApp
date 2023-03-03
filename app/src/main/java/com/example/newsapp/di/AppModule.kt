@@ -1,7 +1,7 @@
 package com.example.newsapp.di
 
 import com.example.newsapp.domain.repository.NewsRepository
-import com.example.newsapp.model.NewsApiService
+import com.example.newsapp.news_api.NewsApiService
 import com.example.newsapp.news_api.data.remote.NewsRemoteDataSource
 import com.example.newsapp.news_api.data.repository.NewsRepositoryImpl
 import com.example.newsapp.news_api.util.Constant

@@ -26,22 +26,27 @@ class MainFragment : Fragment(), View.OnClickListener{
         binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        loadSavedData()
+
         binding.newsList.adapter = NewsListAdapter(NewListListener { news ->
             viewModel.onNewsClicked(news)
             findNavController()
-                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)
+        })
         binding.horizontalList.adapter = NewsCardAdapter(NewCardsListener { news ->
             viewModel.onNewsClicked(news)
             findNavController()
-                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)
+        })
 
-        binding.seeAll.setOnClickListener{
+        binding.seeAll.setOnClickListener {
             viewModel.getQueryNews("bitcoin")
             findNavController()
                 .navigate(R.id.action_mainFragment_to_allNewsFragment)
         }
 
-        binding.searchBar.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrBlank()) {
                     return false
@@ -61,7 +66,6 @@ class MainFragment : Fragment(), View.OnClickListener{
         )
 
         binding.business.setOnClickListener(this)
-        binding.business.isSelected = true
         binding.entertainment.setOnClickListener(this)
         binding.general.setOnClickListener(this)
         binding.science.setOnClickListener(this)
@@ -71,7 +75,44 @@ class MainFragment : Fragment(), View.OnClickListener{
         return binding.root
     }
 
+    private fun loadSavedData() {
+        when (viewModel.isSelected) {
+            R.id.business -> {
+                viewModel.changeNewsCategory(NewsCategories.BUSINESS)
+                clearCategorySelected()
+                binding.business.isSelected = true
+            }
+            R.id.entertainment -> {
+                viewModel.changeNewsCategory(NewsCategories.ENTERTAINMENT)
+                clearCategorySelected()
+                binding.entertainment.isSelected = true
+            }
+            R.id.general -> {
+                viewModel.changeNewsCategory(NewsCategories.GENERAL)
+                clearCategorySelected()
+                binding.general.isSelected = true
+            }
+            R.id.science -> {
+                viewModel.changeNewsCategory(NewsCategories.SCIENCE)
+                clearCategorySelected()
+                binding.science.isSelected = true
+            }
+            R.id.health -> {
+                viewModel.changeNewsCategory(NewsCategories.HEALTH)
+                clearCategorySelected()
+                binding.health.isSelected = true
+            }
+            R.id.technology -> {
+                viewModel.changeNewsCategory(NewsCategories.TECHNOLOGY)
+                clearCategorySelected()
+                binding.technology.isSelected = true
+            }
+            else-> viewModel.changeNewsCategory(NewsCategories.LATEST)
+        }
+    }
+
     override fun onClick(v: View) {
+        viewModel.isSelected = v.id
         when(v.id) {
             R.id.business -> {
                 viewModel.changeNewsCategory(NewsCategories.BUSINESS)
@@ -105,6 +146,11 @@ class MainFragment : Fragment(), View.OnClickListener{
             }
             else-> viewModel.changeNewsCategory(NewsCategories.LATEST)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("IS_SELECTED_KEY", binding.business.isSelected)
     }
 
     private fun clearCategorySelected() {

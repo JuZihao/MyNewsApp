@@ -1,7 +1,7 @@
 package com.example.newsapp.news_api.data.remote
 
 import com.example.newsapp.domain.model.NewsDataFromJson
-import com.example.newsapp.model.NewsApi
+import com.example.newsapp.news_api.NewsApi
 import com.example.newsapp.news_api.util.ApiResult
 import com.example.newsapp.news_api.util.handleApi
 import com.example.newsapp.ui.NewsCategories

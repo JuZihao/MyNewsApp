@@ -8,7 +8,7 @@ import retrofit2.Response
 
 interface NewsRepository {
 
-    suspend fun getNewsList(): ApiResult<NewsDataFromJson>
+    suspend fun getNewsList(): Flow<ApiResult<NewsDataFromJson>>
 
     suspend fun getNewsByCategory(category: NewsCategories): ApiResult<NewsDataFromJson>
 

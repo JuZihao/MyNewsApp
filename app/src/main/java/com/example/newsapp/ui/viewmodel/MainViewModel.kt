@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.R
 import com.example.newsapp.domain.model.NewsArticle
 import com.example.newsapp.domain.repository.NewsRepository
 import com.example.newsapp.news_api.util.ApiResult
@@ -33,6 +34,8 @@ class MainViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
+    var isSelected: Int = R.id.business
+
     val rawNewsList: MutableMap<NewsCategories, List<NewsArticle>> = mutableMapOf()
 
     private val _status = MutableLiveData<NewsApiStatus>()
@@ -61,23 +64,42 @@ class MainViewModel @Inject constructor(
     }
     fun getLatestNews() = viewModelScope.launch {
         _status.value = NewsApiStatus.LOADING
-        when(val response = newsRepository.getNewsList()) {
-            is ApiResult.Success -> {
-                _status.value = NewsApiStatus.DONE
-                response.data?.let { ApiResponse ->
-                    val data = processData(ApiResponse.articles)
-                    _breakingNews.value = data
-                    rawNewsList[NewsCategories.LATEST] = data
+        newsRepository.getNewsList().collect{
+            when (it) {
+                is ApiResult.Success -> {
+                    _status.value = NewsApiStatus.DONE
+                    it.data?.let { ApiResponse ->
+                        val data = processData(ApiResponse.articles)
+                        _breakingNews.value = data
+                        rawNewsList[NewsCategories.LATEST] = data
+                    }
+                }
+                is ApiResult.Error -> {
+                    _status.value = NewsApiStatus.ERROR
+                    _breakingNews.value = listOf()
+                }
+                else -> {
+                    _status.value = NewsApiStatus.LOADING
                 }
             }
-            is ApiResult.Error -> {
-                _status.value = NewsApiStatus.ERROR
-                _breakingNews.value = listOf()
-            }
-            else -> {
-                _status.value = NewsApiStatus.LOADING
-            }
         }
+//        when(val response = newsRepository.getNewsList()) {
+//            is ApiResult.Success -> {
+//                _status.value = NewsApiStatus.DONE
+//                response.data?.let { ApiResponse ->
+//                    val data = processData(ApiResponse.articles)
+//                    _breakingNews.value = data
+//                    rawNewsList[NewsCategories.LATEST] = data
+//                }
+//            }
+//            is ApiResult.Error -> {
+//                _status.value = NewsApiStatus.ERROR
+//                _breakingNews.value = listOf()
+//            }
+//            else -> {
+//                _status.value = NewsApiStatus.LOADING
+//            }
+//        }
     }
 
     fun changeNewsCategory(category: NewsCategories = NewsCategories.BUSINESS) {
@@ -94,7 +116,6 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-
 
 
     fun onNewsClicked(news: NewsArticle) {
@@ -125,7 +146,7 @@ class MainViewModel @Inject constructor(
             when (val response = newsRepository.getNewsByQuery(query)) {
                 is ApiResult.Success -> {
                     _status.value = NewsApiStatus.DONE
-                    response.data?.let { ApiResponse ->
+                    response.data?.let {  ApiResponse ->
                         val data = processData(ApiResponse.articles)
                         _categoryNewsList.value = data
                     }
