@@ -4,10 +4,10 @@
     <data>
         <variable
             name="news"
-            type="com.example.newsapp.model.NewsArticle" />
+            type="com.example.newsapp.domain.model.NewsArticle" />
         <variable
             name="clickListener"
-            type="com.example.newsapp.views.NewCardsListener" />
+            type="com.example.newsapp.ui.NewCardsListener" />
     </data>
 
             <RelativeLayout
@@ -28,6 +28,7 @@
                         tools:src="@tools:sample/backgrounds/scenic"
                         app:shapeAppearanceOverlay="@style/roundimageview"
                         android:onClick="@{() -> clickListener.onClick(news)}"
+                        app:strokeColor="@null"
                         />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

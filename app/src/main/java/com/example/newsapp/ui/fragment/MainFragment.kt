@@ -1,4 +1,4 @@
-package com.example.newsapp.views
+package com.example.newsapp.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentMainBinding
+import com.example.newsapp.news_api.util.ApiResult
+import com.example.newsapp.ui.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainFragment : Fragment(), View.OnClickListener{
 
     private val viewModel: MainViewModel by activityViewModels()
@@ -23,22 +33,27 @@ class MainFragment : Fragment(), View.OnClickListener{
         binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        loadSavedData()
+
         binding.newsList.adapter = NewsListAdapter(NewListListener { news ->
             viewModel.onNewsClicked(news)
             findNavController()
-                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)
+        })
         binding.horizontalList.adapter = NewsCardAdapter(NewCardsListener { news ->
             viewModel.onNewsClicked(news)
             findNavController()
-                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)})
+                .navigate(R.id.action_mainFragment_to_newsDetailFragment2)
+        })
 
-        binding.seeAll.setOnClickListener{
-            viewModel.changeNewsCategory(NewsCategories.LATEST)
+        binding.seeAll.setOnClickListener {
+            viewModel.getQueryNews("bitcoin")
             findNavController()
                 .navigate(R.id.action_mainFragment_to_allNewsFragment)
         }
 
-        binding.searchBar.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrBlank()) {
                     return false
@@ -58,7 +73,6 @@ class MainFragment : Fragment(), View.OnClickListener{
         )
 
         binding.business.setOnClickListener(this)
-        binding.business.isSelected = true
         binding.entertainment.setOnClickListener(this)
         binding.general.setOnClickListener(this)
         binding.science.setOnClickListener(this)
@@ -68,7 +82,44 @@ class MainFragment : Fragment(), View.OnClickListener{
         return binding.root
     }
 
+    private fun loadSavedData() {
+        when (viewModel.isSelected) {
+            R.id.business -> {
+                viewModel.changeNewsCategory(NewsCategories.BUSINESS)
+                clearCategorySelected()
+                binding.business.isSelected = true
+            }
+            R.id.entertainment -> {
+                viewModel.changeNewsCategory(NewsCategories.ENTERTAINMENT)
+                clearCategorySelected()
+                binding.entertainment.isSelected = true
+            }
+            R.id.general -> {
+                viewModel.changeNewsCategory(NewsCategories.GENERAL)
+                clearCategorySelected()
+                binding.general.isSelected = true
+            }
+            R.id.science -> {
+                viewModel.changeNewsCategory(NewsCategories.SCIENCE)
+                clearCategorySelected()
+                binding.science.isSelected = true
+            }
+            R.id.health -> {
+                viewModel.changeNewsCategory(NewsCategories.HEALTH)
+                clearCategorySelected()
+                binding.health.isSelected = true
+            }
+            R.id.technology -> {
+                viewModel.changeNewsCategory(NewsCategories.TECHNOLOGY)
+                clearCategorySelected()
+                binding.technology.isSelected = true
+            }
+            else-> viewModel.changeNewsCategory(NewsCategories.LATEST)
+        }
+    }
+
     override fun onClick(v: View) {
+        viewModel.isSelected = v.id
         when(v.id) {
             R.id.business -> {
                 viewModel.changeNewsCategory(NewsCategories.BUSINESS)

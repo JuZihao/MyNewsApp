@@ -1,4 +1,4 @@
-package com.example.newsapp.views
+package com.example.newsapp.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentSeeAllBinding
+import com.example.newsapp.ui.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class AllNewsFragment: Fragment(), View.OnClickListener {
@@ -29,7 +29,7 @@ class AllNewsFragment: Fragment(), View.OnClickListener {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.newsList.adapter = NewsListAdapter(NewListListener {news ->
+        binding.newsList.adapter = NewsListAdapter(NewListListener { news ->
             viewModel.onNewsClicked(news)
             findNavController()
                 .navigate(R.id.action_allNewsFragment_to_newsDetailFragment2)})

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.newsapp.views.MainViewModel" />
+            type="com.example.newsapp.ui.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

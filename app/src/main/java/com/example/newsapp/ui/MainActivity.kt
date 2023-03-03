@@ -1,13 +1,15 @@
-package com.example.newsapp
+package com.example.newsapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import androidx.appcompat.app.ActionBar
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import com.example.newsapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController

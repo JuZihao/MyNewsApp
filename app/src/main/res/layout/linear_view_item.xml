@@ -6,11 +6,11 @@
     <data>
         <variable
             name="news"
-            type="com.example.newsapp.model.NewsArticle" />
+            type="com.example.newsapp.domain.model.NewsArticle" />
 
         <variable
             name="clickListener"
-            type="com.example.newsapp.views.NewListListener" />
+            type="com.example.newsapp.ui.NewListListener" />
     </data>
 
             <RelativeLayout
@@ -30,6 +30,7 @@
                 tools:src="@tools:sample/backgrounds/scenic"
                 app:shapeAppearanceOverlay="@style/roundimageview"
                 android:onClick="@{() -> clickListener.onClick(news)}"
+                app:strokeColor="@null"
                  />
 
 

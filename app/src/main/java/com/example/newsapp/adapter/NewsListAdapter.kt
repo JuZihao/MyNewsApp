@@ -1,15 +1,15 @@
-package com.example.newsapp.views
+package com.example.newsapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapp.model.NewsArticle
+import com.example.newsapp.domain.model.NewsArticle
 import androidx.recyclerview.widget.ListAdapter
 import com.example.newsapp.databinding.LinearViewItemBinding
 
 
-class NewsListAdapter (val clickListener: NewListListener) :
+class NewsListAdapter (private val clickListener: NewListListener) :
         ListAdapter<NewsArticle, NewsListAdapter.NewListViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<NewsArticle>() {
