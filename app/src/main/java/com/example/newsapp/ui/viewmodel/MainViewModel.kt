@@ -1,21 +1,23 @@
 package com.example.newsapp.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.NewsArticle
 import com.example.newsapp.domain.repository.NewsRepository
 import com.example.newsapp.news_api.util.ApiResult
+import com.example.newsapp.news_api.util.Constant.DEFAULT_NEWS_CONTENT
+import com.example.newsapp.news_api.util.NewsApiStatus
+import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-
-
-enum class NewsApiStatus {LOADING, ERROR, DONE}
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 enum class NewsCategories(val message: String) {
     LATEST("lastestNews"),
@@ -39,22 +41,22 @@ class MainViewModel @Inject constructor(
 
     val rawNewsList: MutableMap<NewsCategories, List<NewsArticle>> = mutableMapOf()
 
-    private val _status = MutableLiveData<NewsApiStatus>()
-    val status: LiveData<NewsApiStatus> = _status
+    private val _status = MutableStateFlow(NewsApiStatus.LOADING)
+    val status = _status.asStateFlow()
 
     private val _breakingNews: MutableStateFlow<List<NewsArticle>> = MutableStateFlow(listOf())
-    val breakingNews: MutableStateFlow<List<NewsArticle>> = _breakingNews
+    val breakingNews = _breakingNews.asStateFlow()
 
 
-    private val _categoryNewsList = MutableLiveData<List<NewsArticle>>()
-    val categoryNewsList: MutableLiveData<List<NewsArticle>> = _categoryNewsList
+    private val _categoryNewsList = MutableStateFlow<List<NewsArticle>>(listOf())
+    val categoryNewsList = _categoryNewsList.asStateFlow()
 
-    private val _size = MutableLiveData<String>()
-    val size: LiveData<String> = _size
+    private val _size = MutableStateFlow("0")
+    val size = _size.asStateFlow()
 
 
-    private val _news = MutableLiveData<NewsArticle>()
-    val news: MutableLiveData<NewsArticle> = _news
+    private val _news = MutableStateFlow(NewsArticle())
+    val news = _news.asStateFlow()
 
     val dateFormatter = SimpleDateFormat("EEEE, dd MMM yyyy")
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
@@ -68,7 +70,7 @@ class MainViewModel @Inject constructor(
         newsRepository.getNewsList().collect{
             when (it) {
                 is ApiResult.Success -> {
-                    _status.value = NewsApiStatus.DONE
+                    _status.value = NewsApiStatus.SUCCESS
                     it.data?.let { ApiResponse ->
                         val data = processData(ApiResponse.articles)
                         _breakingNews.value = data
@@ -84,23 +86,6 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
-//        when(val response = newsRepository.getNewsList()) {
-//            is ApiResult.Success -> {
-//                _status.value = NewsApiStatus.DONE
-//                response.data?.let { ApiResponse ->
-//                    val data = processData(ApiResponse.articles)
-//                    _breakingNews.value = data
-//                    rawNewsList[NewsCategories.LATEST] = data
-//                }
-//            }
-//            is ApiResult.Error -> {
-//                _status.value = NewsApiStatus.ERROR
-//                _breakingNews.value = listOf()
-//            }
-//            else -> {
-//                _status.value = NewsApiStatus.LOADING
-//            }
-//        }
     }
 
     fun changeNewsCategory(category: NewsCategories = NewsCategories.BUSINESS) {
@@ -112,7 +97,7 @@ class MainViewModel @Inject constructor(
             NewsCategories.HEALTH -> getCategoryNews(NewsCategories.HEALTH)
             NewsCategories.SCIENCE -> getCategoryNews(NewsCategories.SCIENCE)
             else -> {
-                _categoryNewsList.value = rawNewsList[NewsCategories.LATEST]
+                _categoryNewsList.value = rawNewsList[NewsCategories.LATEST]!!
                 _size.value = "About ${rawNewsList[NewsCategories.LATEST]?.size} results for All News"
             }
         }
@@ -131,8 +116,12 @@ class MainViewModel @Inject constructor(
                 val date = inputFormat.parse(news.publishedAt)
                 news.publishedAt = dateFormatter.format(date!!)
 
-                val text = news.content?.split("[")
-                news.content = text?.get(0)
+                if (news.content != null) {
+                    val text = news.content?.split("[")
+                    news.content = text?.get(0)
+                } else {
+                    news.content = DEFAULT_NEWS_CONTENT
+                }
             }
             return newsList
         } catch (e: Exception) {
@@ -144,21 +133,23 @@ class MainViewModel @Inject constructor(
     fun getQueryNews(query: String) {
         _status.value = NewsApiStatus.LOADING
         viewModelScope.launch {
-            when (val response = newsRepository.getNewsByQuery(query)) {
-                is ApiResult.Success -> {
-                    _status.value = NewsApiStatus.DONE
-                    response.data?.let {  ApiResponse ->
-                        val data = processData(ApiResponse.articles)
-                        _categoryNewsList.value = data
+            newsRepository.getNewsByQuery(query).collect {
+                when (it) {
+                    is ApiResult.Success -> {
+                        _status.value = NewsApiStatus.SUCCESS
+                        it.data?.let { ApiResponse ->
+                            val data = processData(ApiResponse.articles)
+                            _categoryNewsList.value = data
+                        }
                     }
-                }
-                is ApiResult.Error -> {
-                    _status.value = NewsApiStatus.ERROR
-                    _categoryNewsList.value = listOf()
-                    _size.value = response.message!!
-                }
-                else -> {
-                    _status.value = NewsApiStatus.LOADING
+                    is ApiResult.Error -> {
+                        _status.value = NewsApiStatus.ERROR
+                        _categoryNewsList.value = listOf()
+                        _size.value = it.message!!
+                    }
+                    else -> {
+                        _status.value = NewsApiStatus.LOADING
+                    }
                 }
             }
         }
@@ -168,27 +159,29 @@ class MainViewModel @Inject constructor(
         if (rawNewsList[category].isNullOrEmpty()) {
             _status.value = NewsApiStatus.LOADING
             viewModelScope.launch {
-                when (val response = newsRepository.getNewsByCategory(category)) {
-                    is ApiResult.Success -> {
-                        _status.value = NewsApiStatus.DONE
-                        response.data?.let { ApiResponse ->
-                            val data = processData(ApiResponse.articles)
-                            _categoryNewsList.value = data
-                            rawNewsList[category] = data
+                newsRepository.getNewsByCategory(category).collect {
+                    when (it) {
+                        is ApiResult.Success -> {
+                            _status.value = NewsApiStatus.SUCCESS
+                            it.data?.let { ApiResponse ->
+                                val data = processData(ApiResponse.articles)
+                                _categoryNewsList.value = data
+                                rawNewsList[category] = data
+                            }
                         }
-                    }
-                    is ApiResult.Error -> {
-                        _status.value = NewsApiStatus.ERROR
-                        _categoryNewsList.value = listOf()
-                        _size.value = response.message!!
-                    }
-                    else -> {
-                        _status.value = NewsApiStatus.LOADING
+                        is ApiResult.Error -> {
+                            _status.value = NewsApiStatus.ERROR
+                            _categoryNewsList.value = listOf()
+                            _size.value = it.message!!
+                        }
+                        else -> {
+                            _status.value = NewsApiStatus.LOADING
+                        }
                     }
                 }
             }
         } else {
-            _categoryNewsList.value = rawNewsList[category]
+            _categoryNewsList.value = rawNewsList[category]!!
         }
     }
 
@@ -197,15 +190,15 @@ class MainViewModel @Inject constructor(
             SortByTypes.DEFAULT -> _categoryNewsList.value = _categoryNewsList.value
             SortByTypes.RECOMMENDED -> _categoryNewsList.value = _categoryNewsList.value
             SortByTypes.LATEST -> {
-                _categoryNewsList.value = _categoryNewsList.value?.sortedByDescending {
+                _categoryNewsList.value = _categoryNewsList.value.sortedByDescending {
                     dateFormatter.parse(it.publishedAt)
                 }
             }
-            SortByTypes.VIEW -> _breakingNews.value = _categoryNewsList.value!!
+            SortByTypes.VIEW -> _breakingNews.value = _categoryNewsList.value
         }
     }
 
-    fun getNewsUrl(): String? {
-        return news.value?.url
+    fun getNewsUrl(): String {
+        return _news.value.url
     }
 }

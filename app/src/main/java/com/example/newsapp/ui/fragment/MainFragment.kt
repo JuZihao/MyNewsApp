@@ -7,11 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentMainBinding
+import com.example.newsapp.news_api.util.ApiResult
 import com.example.newsapp.ui.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : Fragment(), View.OnClickListener{
@@ -146,11 +153,6 @@ class MainFragment : Fragment(), View.OnClickListener{
             }
             else-> viewModel.changeNewsCategory(NewsCategories.LATEST)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("IS_SELECTED_KEY", binding.business.isSelected)
     }
 
     private fun clearCategorySelected() {

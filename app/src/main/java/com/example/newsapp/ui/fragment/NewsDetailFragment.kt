@@ -54,7 +54,7 @@ class NewsDetailFragment: Fragment() {
 
     private fun setClickableLink() {
         try {
-            val newText = StringBuilder().append(viewModel.news.value?.content).append(readMore).toString()
+            val newText = StringBuilder().append(viewModel.news.value.content).append(readMore).toString()
             val ss = SpannableString(newText)
 
             val clickableSpan = object : android.text.style.ClickableSpan() {

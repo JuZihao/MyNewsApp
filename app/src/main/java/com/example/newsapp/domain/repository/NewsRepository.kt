@@ -10,7 +10,7 @@ interface NewsRepository {
 
     suspend fun getNewsList(): Flow<ApiResult<NewsDataFromJson>>
 
-    suspend fun getNewsByCategory(category: NewsCategories): ApiResult<NewsDataFromJson>
+    suspend fun getNewsByCategory(category: NewsCategories): Flow<ApiResult<NewsDataFromJson>>
 
-    suspend fun getNewsByQuery(query: String): ApiResult<NewsDataFromJson>
+    suspend fun getNewsByQuery(query: String): Flow<ApiResult<NewsDataFromJson>>
 }

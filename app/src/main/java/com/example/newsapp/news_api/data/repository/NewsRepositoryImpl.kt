@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
 
 
 class NewsRepositoryImpl @Inject constructor(
@@ -23,20 +22,23 @@ class NewsRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
-    override suspend fun getNewsByCategory(category: NewsCategories): ApiResult<NewsDataFromJson> =
-        handleApi {
-            when (category) {
-                NewsCategories.BUSINESS -> newsApi.getCategoryNews(NewsCategories.BUSINESS.toString())
-                NewsCategories.LATEST -> newsApi.getCategoryNews(NewsCategories.LATEST.toString())
-                NewsCategories.GENERAL -> newsApi.getCategoryNews(NewsCategories.GENERAL.toString())
-                NewsCategories.TECHNOLOGY -> newsApi.getCategoryNews(NewsCategories.TECHNOLOGY.toString())
-                NewsCategories.ENTERTAINMENT -> newsApi.getCategoryNews(
-                    NewsCategories.ENTERTAINMENT.toString()
-                )
-                NewsCategories.SCIENCE -> newsApi.getCategoryNews(NewsCategories.SCIENCE.toString())
-                NewsCategories.HEALTH -> newsApi.getCategoryNews(NewsCategories.HEALTH.toString())
+    override suspend fun getNewsByCategory(category: NewsCategories): Flow<ApiResult<NewsDataFromJson>> = flow {
+        emit(
+            handleApi {
+                when (category) {
+                    NewsCategories.BUSINESS -> newsApi.getCategoryNews(NewsCategories.BUSINESS.toString())
+                    NewsCategories.LATEST -> newsApi.getCategoryNews(NewsCategories.LATEST.toString())
+                    NewsCategories.GENERAL -> newsApi.getCategoryNews(NewsCategories.GENERAL.toString())
+                    NewsCategories.TECHNOLOGY -> newsApi.getCategoryNews(NewsCategories.TECHNOLOGY.toString())
+                    NewsCategories.ENTERTAINMENT -> newsApi.getCategoryNews(NewsCategories.ENTERTAINMENT.toString())
+                    NewsCategories.SCIENCE -> newsApi.getCategoryNews(NewsCategories.SCIENCE.toString())
+                    NewsCategories.HEALTH -> newsApi.getCategoryNews(NewsCategories.HEALTH.toString())
+                }
             }
-        }
+        )
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun getNewsByQuery(query: String): ApiResult<NewsDataFromJson> = handleApi { newsApi.searchForNews(query) }
+    override suspend fun getNewsByQuery(query: String): Flow<ApiResult<NewsDataFromJson>> = flow {
+        emit(handleApi { newsApi.searchForNews(query) } )
+    }.flowOn(Dispatchers.IO)
 }

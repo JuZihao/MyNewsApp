@@ -9,12 +9,12 @@ import androidx.room.PrimaryKey
 data class NewsArticle (
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
-    val source: Source,
-    val author: String?,
-    val title: String?,
-    val description: String?,
-    val url: String,
-    val urlToImage: String?,
-    var publishedAt: String,
-    var content: String?
+    val source: Source = Source("",""),
+    val author: String? = "",
+    val title: String = "",
+    val description: String? = "",
+    val url: String = "",
+    val urlToImage: String? = "",
+    var publishedAt: String = "",
+    var content: String? = ""
     )

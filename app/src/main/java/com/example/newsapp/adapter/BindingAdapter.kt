@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
 import com.example.newsapp.domain.model.NewsArticle
-import com.example.newsapp.news_api.util.ApiResult
-import com.example.newsapp.ui.NewsApiStatus
+import com.example.newsapp.news_api.util.NewsApiStatus
 import com.example.newsapp.ui.NewsCardAdapter
 import com.example.newsapp.ui.NewsListAdapter
 
@@ -43,10 +42,14 @@ fun bindStatus(statusImageView: ImageView, status: NewsApiStatus) {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
         }
-        NewsApiStatus.DONE -> {
+        NewsApiStatus.SUCCESS -> {
             statusImageView.visibility = View.GONE
         }
         NewsApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        NewsApiStatus.EMPTY -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
         }

@@ -16,4 +16,5 @@
     <string name="latest">Latest</string>
     <string name="most_viewed">Most Viewed</string>
     <string name="save">Save</string>
+    <string name="default_news_content">No content from the news API. To see the news please </string>
 </resources>
