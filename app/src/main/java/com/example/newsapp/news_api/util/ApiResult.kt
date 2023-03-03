@@ -6,7 +6,8 @@ import retrofit2.Response
 enum class NewsApiStatus {
     LOADING,
     ERROR,
-    SUCCESS
+    SUCCESS,
+    EMPTY
 }
 
 sealed class ApiResult<out T>(
@@ -28,6 +29,7 @@ sealed class ApiResult<out T>(
     )
 
     class Loading<out R>: ApiResult<R>(NewsApiStatus.LOADING)
+    class Empty : ApiResult<Nothing>(NewsApiStatus.EMPTY)
 
 }
 

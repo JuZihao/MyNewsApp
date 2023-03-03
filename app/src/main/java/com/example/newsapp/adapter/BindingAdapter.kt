@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
 import com.example.newsapp.domain.model.NewsArticle
+import com.example.newsapp.news_api.util.ApiResult
 import com.example.newsapp.ui.NewsApiStatus
 import com.example.newsapp.ui.NewsCardAdapter
 import com.example.newsapp.ui.NewsListAdapter

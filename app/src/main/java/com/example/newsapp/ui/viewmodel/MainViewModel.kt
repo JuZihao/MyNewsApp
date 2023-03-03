@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 enum class NewsApiStatus {LOADING, ERROR, DONE}
@@ -41,8 +42,8 @@ class MainViewModel @Inject constructor(
     private val _status = MutableLiveData<NewsApiStatus>()
     val status: LiveData<NewsApiStatus> = _status
 
-    private val _breakingNews: MutableLiveData<List<NewsArticle>> = MutableLiveData()
-    val breakingNews: MutableLiveData<List<NewsArticle>> = _breakingNews
+    private val _breakingNews: MutableStateFlow<List<NewsArticle>> = MutableStateFlow(listOf())
+    val breakingNews: MutableStateFlow<List<NewsArticle>> = _breakingNews
 
 
     private val _categoryNewsList = MutableLiveData<List<NewsArticle>>()
@@ -200,7 +201,7 @@ class MainViewModel @Inject constructor(
                     dateFormatter.parse(it.publishedAt)
                 }
             }
-            SortByTypes.VIEW -> _breakingNews.value = _categoryNewsList.value
+            SortByTypes.VIEW -> _breakingNews.value = _categoryNewsList.value!!
         }
     }
 

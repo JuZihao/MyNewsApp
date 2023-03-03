@@ -7,8 +7,11 @@ import com.example.newsapp.news_api.util.ApiResult
 import com.example.newsapp.news_api.util.handleApi
 import com.example.newsapp.ui.NewsCategories
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 
 
 class NewsRepositoryImpl @Inject constructor(
@@ -17,7 +20,7 @@ class NewsRepositoryImpl @Inject constructor(
 
     override suspend fun getNewsList(): Flow<ApiResult<NewsDataFromJson>> = flow {
         emit(handleApi { newsApi.getBreakingNews() })
-    }
+    }.flowOn(Dispatchers.IO)
 
 
     override suspend fun getNewsByCategory(category: NewsCategories): ApiResult<NewsDataFromJson> =
